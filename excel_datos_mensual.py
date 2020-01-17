@@ -13,17 +13,17 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 
 now = datetime.now()
-date = now.strftime("%m-%d-%Y")
-print(date)
+date = now.strftime("%m-%Y")
 # Create a workbook and add a worksheet.
-nombre = str('Reporte_del_dia_'+str(date)+'.xlsx')
+nombre = str('Reporte_mensual_'+str(date)+'.xlsx')
 print(nombre)
 workbook = xlsxwriter.Workbook(nombre)
 worksheet = workbook.add_worksheet()
 
-mycursor.execute("select id,pesaje,date_format(date,'%d-%m-%Y %H:%i:%s') from pesajes")
+mycursor.execute("select id,round(sum(pesaje),2),date_format(date,'%d-%m') from pesajes p where month(p.date) = month(now()) and year(p.date) = year(now()) group by day(p.date)")
 result = mycursor.fetchall()
-
+print(result)
+input('asd')
 expenses = result
 # Start from the first cell. Rows and columns are zero indexed.
 row = 0

@@ -58,13 +58,13 @@ def read_port(puertos):
                     reading = ser.readline().decode('utf-8')
                     if reading and reading[10].isnumeric():
                         numero = float(reading[6:14])
+                        print(numero)
                         if numero > 10:
                             numeros.append(numero)
                         else:
 
                             if len(numeros) > 0:
                                 max_item = max(numeros, key=float)
-                                print(numeros)
                                 print("guardando peso",str(max_item))
                                 mycursor.execute("insert into pesajes (pesaje) values (" + str(max_item) + ")")
 
